@@ -4,6 +4,7 @@ on:
     branches:
       - main
       - dev
+  workflow_dispatch: # Allows manual triggering of the workflow from the GitHub
 env: # All jobs will have access to these environment variables
   MONGODB_DB_NAME: dev
 jobs:
