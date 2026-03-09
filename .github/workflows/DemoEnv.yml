@@ -1,0 +1,41 @@
+name: Environment Variables
+on: 
+  push:
+    branches:
+      - main
+      - dev
+env: # All jobs will have access to these environment variables
+  MONGODB_DB_NAME: dev
+jobs:
+  test:
+    env: # This job will have access to these environment variables in addition
+      MONGODB_CLUSTER_ADDRESS: bongani-mongo-cluster.zbwfn2r.mongodb.net
+      MONGODB_PASSWORD: goodnight21@B
+      MONGODB_USERNAME: bongani
+      PORT: 8080
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: npm-deps-${{ hashFiles('**/package-lock.json') }}
+      - name: install Dependencies
+        run: npm ci
+      - name: Run Server
+        run: npm start & npx wait-on https://127.0.0.1:$PORT
+      - name: Run Tests
+        run: npm test
+      - name: Output Information
+        run: |
+           echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME }}"
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output information
+        run: |
+          echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME }}"
+          echo "MONGODB_DB_NAME: $MONGODB_DB_NAME"
