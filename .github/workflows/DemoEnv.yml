@@ -9,6 +9,7 @@ env: # All jobs will have access to these environment variables
   MONGODB_DB_NAME: dev
 jobs:
   test:
+    environment: dev
     env: # This job will have access to these environment variables in addition
       MONGODB_CLUSTER_ADDRESS: bongani-mongo-cluster.zbwfn2r.mongodb.net
       MONGODB_PASSWORD: ${{secrets.MONGODB_PASSWORD}}
