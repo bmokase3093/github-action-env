@@ -11,8 +11,8 @@ jobs:
   test:
     env: # This job will have access to these environment variables in addition
       MONGODB_CLUSTER_ADDRESS: bongani-mongo-cluster.zbwfn2r.mongodb.net
-      MONGODB_PASSWORD: lEjWEDQ22qe7kpfo
-      MONGODB_USERNAME: bongani
+      MONGODB_PASSWORD: ${{secrets.MONGODB_PASSWORD}}
+      MONGODB_USERNAME: ${{secrets.MONGODB_USERNAME}}
       PORT: 8080
     runs-on: ubuntu-latest
     steps:
